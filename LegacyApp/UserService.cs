@@ -7,6 +7,8 @@ namespace LegacyApp
 {
     public class UserService
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+        
         public bool AddUser(string firname, string surname, string email, DateTime dateOfBirth, int clientId)
         {
             if (string.IsNullOrEmpty(firname) || string.IsNullOrEmpty(surname))
@@ -19,7 +21,7 @@ namespace LegacyApp
                 return false;
             }
 
-            var now = DateTime.Now;
+            var now = _dateTimeProvider.DateTimeNow;
             int age = now.Year - dateOfBirth.Year;
 
             if (now.Month < dateOfBirth.Month || (now.Month == dateOfBirth.Month && now.Day < dateOfBirth.Day))
