@@ -1,4 +1,7 @@
 ﻿using System;
+using LegacyApp.Models;
+using LegacyApp.Repositories;
+using LegacyApp.Services;
 
 namespace LegacyApp
 {
