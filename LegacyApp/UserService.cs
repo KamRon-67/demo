@@ -8,6 +8,7 @@ namespace LegacyApp
     public class UserService
     {
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IClientRepository _clientRepository;
         
         public bool AddUser(string firname, string surname, string email, DateTime dateOfBirth, int clientId)
         {
@@ -33,9 +34,8 @@ namespace LegacyApp
             {
                 return false;
             }
-
-            var clientRepository = new ClientRepository();
-            var client = clientRepository.GetById(clientId);
+            
+            var client = _clientRepository.GetById(clientId);
 
             var user = new User
             {
