@@ -9,6 +9,7 @@ namespace LegacyApp
     {
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IClientRepository _clientRepository;
+        private readonly IUserCreditService _userCreditService;
         
         public bool AddUser(string firname, string surname, string email, DateTime dateOfBirth, int clientId)
         {
@@ -55,22 +56,20 @@ namespace LegacyApp
             {
                 // Do credit check and double credit limit
                 user.HasCreditLimit = true;
-                using (var userCreditService = new UserCreditServiceClient())
-                {
-                    var creditLimit = userCreditService.GetCreditLimit(user.Firstname, user.Surname, user.DateOfBirth);
+                
+                    var creditLimit = _userCreditService.GetCreditLimit(user.Firstname, user.Surname, user.DateOfBirth);
                     creditLimit = creditLimit * 2;
                     user.CreditLimit = creditLimit;
-                }
+                
             }
             else
             {
                 // Do credit check
                 user.HasCreditLimit = true;
-                using (var userCreditService = new UserCreditServiceClient())
-                {
-                    var creditLimit = userCreditService.GetCreditLimit(user.Firstname, user.Surname, user.DateOfBirth);
+
+                    var creditLimit = _userCreditService.GetCreditLimit(user.Firstname, user.Surname, user.DateOfBirth);
                     user.CreditLimit = creditLimit;
-                }
+                
             }
 
             if (user.HasCreditLimit && user.CreditLimit < 500)
