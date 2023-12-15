@@ -1,4 +1,5 @@
 ﻿using System;
+using LegacyApp.DataAccess;
 using LegacyApp.Models;
 using LegacyApp.Repositories;
 using LegacyApp.Services;
@@ -10,6 +11,7 @@ namespace LegacyApp
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IClientRepository _clientRepository;
         private readonly IUserCreditService _userCreditService;
+        private readonly IUserDataAccess _userDataAccess;
         
         public bool AddUser(string firname, string surname, string email, DateTime dateOfBirth, int clientId)
         {
@@ -77,7 +79,7 @@ namespace LegacyApp
                 return false;
             }
             
-            UserDataAccess.AddUser(user);
+            _userDataAccess.AddUser(user);
 
             return true;
         }
