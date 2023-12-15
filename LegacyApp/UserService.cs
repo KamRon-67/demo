@@ -12,7 +12,27 @@ namespace LegacyApp
         private readonly IClientRepository _clientRepository;
         private readonly IUserCreditService _userCreditService;
         private readonly IUserDataAccess _userDataAccess;
-        
+
+        public UserService(
+            IDateTimeProvider dateTimeProvider, 
+            IClientRepository clientRepository, 
+            IUserCreditService userCreditService, 
+            IUserDataAccess userDataAccess)
+        {
+            _dateTimeProvider = dateTimeProvider;
+            _clientRepository = clientRepository;
+            _userCreditService = userCreditService;
+            _userDataAccess = userDataAccess;
+        }
+
+        public UserService() :
+            this(new DateTimeProvider(),
+                new ClientRepository(),
+                new UserCreditServiceClient(),
+                new UserDataAccessProxy())
+        {
+            
+        }
         public bool AddUser(string firname, string surname, string email, DateTime dateOfBirth, int clientId)
         {
             if (string.IsNullOrEmpty(firname) || string.IsNullOrEmpty(surname))
